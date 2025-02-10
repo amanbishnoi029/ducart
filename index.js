@@ -10,16 +10,16 @@ const app = express()
 var whitelist = ['http://localhost:3000', 'http://localhost:8000','https://ducart-na61.onrender.com/']
 var corsOptions = {
     origin: function (origin, callback) {
-        if (whitelist.includes(origin) !== -1) {
-            callback(null, true)
+        if (whitelist.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("CORS Error: You are not authenticated to access this API"));
         }
-        else {
-            callback(new Error("CORS Error, You Are Not Authenticated to Access This API"))
-        }
-    }
-}
+    },
+    credentials: true // Allow credentials to be sent
+};
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 require("./dbConnect")
 
